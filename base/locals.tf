@@ -1,5 +1,5 @@
 locals {
-  prefix      = "alexlab"  
+  prefix      = "alexlab"
   location    = "centralus"
   owner       = "AlexandraG"
   environment = "lab"
