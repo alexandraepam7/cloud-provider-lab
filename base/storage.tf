@@ -2,7 +2,7 @@ resource "random_string" "my_numbers" {
   length  = 7
   upper   = false
   special = false
-  numeric  = true
+  numeric = true
 }
 
 resource "azurerm_storage_account" "main" {
