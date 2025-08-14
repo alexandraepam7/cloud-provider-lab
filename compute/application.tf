@@ -1,7 +1,7 @@
 resource "azurerm_public_ip" "epam_tf_lab" {
   name                = "epam-tf-lab-pip"
-  resource_group_name = data.terraform_remote_state.base.outputs.resource_group_name
-  location            = data.terraform_remote_state.base.outputs.location
+  resource_group_name = data.azurerm_resource_group.main.name
+  location            = data.azurerm_resource_group.main.location
   allocation_method   = "Static"
   sku                 = "Standard"
 
@@ -14,8 +14,8 @@ resource "azurerm_public_ip" "epam_tf_lab" {
 
 resource "azurerm_lb" "epam_tf_lab" {
   name                = "epam-tf-lab-lb"
-  resource_group_name = data.terraform_remote_state.base.outputs.resource_group_name
-  location            = data.terraform_remote_state.base.outputs.location
+  resource_group_name = data.azurerm_resource_group.main.name
+  location            = data.azurerm_resource_group.main.location
   sku                 = "Standard"
 
   frontend_ip_configuration {
@@ -56,15 +56,15 @@ resource "azurerm_lb_rule" "epam_tf_lab" {
 
 resource "azurerm_linux_virtual_machine_scale_set" "epam_tf_lab" {
   name                = "epam-tf-lab-vmss"
-  resource_group_name = data.terraform_remote_state.base.outputs.resource_group_name
-  location            = data.terraform_remote_state.base.outputs.location
+  resource_group_name = data.azurerm_resource_group.main.name
+  location            = data.azurerm_resource_group.main.location
   sku                 = "Standard_F2"
   instances           = 2
   admin_username      = "azureuser"
 
   admin_ssh_key {
     username   = "azureuser"
-    public_key = data.terraform_remote_state.base.outputs.ssh_public_key
+    public_key = data.azurerm_ssh_public_key.main.public_key
   }
 
   source_image_reference {
@@ -85,7 +85,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "epam_tf_lab" {
 
     ip_configuration {
       name                      = "ipconfig1"
-      subnet_id                 = data.terraform_remote_state.base.outputs.subnet_id
+      subnet_id                 = data.azurerm_subnet.main.id
       primary                   = true
     }
   }
