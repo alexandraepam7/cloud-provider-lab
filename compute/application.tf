@@ -31,16 +31,16 @@ resource "azurerm_lb" "epam_tf_lab" {
 }
 
 resource "azurerm_lb_backend_address_pool" "epam_tf_lab" {
-  name                = "epam-tf-lab-backend-pool"
-  loadbalancer_id     = azurerm_lb.epam_tf_lab.id
+  name            = "epam-tf-lab-backend-pool"
+  loadbalancer_id = azurerm_lb.epam_tf_lab.id
 }
 
 resource "azurerm_lb_probe" "epam_tf_lab" {
-  name                = "epam-tf-lab-probe"
-  loadbalancer_id     = azurerm_lb.epam_tf_lab.id
-  protocol            = "Http"
-  port                = 80
-  request_path        = "/"
+  name            = "epam-tf-lab-probe"
+  loadbalancer_id = azurerm_lb.epam_tf_lab.id
+  protocol        = "Http"
+  port            = 80
+  request_path    = "/"
 }
 
 resource "azurerm_lb_rule" "epam_tf_lab" {
@@ -50,7 +50,7 @@ resource "azurerm_lb_rule" "epam_tf_lab" {
   frontend_port                  = 80
   backend_port                   = 80
   frontend_ip_configuration_name = azurerm_lb.epam_tf_lab.frontend_ip_configuration[0].name
-  backend_address_pool_ids = [azurerm_lb_backend_address_pool.epam_tf_lab.id]
+  backend_address_pool_ids       = [azurerm_lb_backend_address_pool.epam_tf_lab.id]
   probe_id                       = azurerm_lb_probe.epam_tf_lab.id
 }
 
@@ -84,9 +84,9 @@ resource "azurerm_linux_virtual_machine_scale_set" "epam_tf_lab" {
     primary = true
 
     ip_configuration {
-      name                      = "ipconfig1"
-      subnet_id                 = data.azurerm_subnet.main.id
-      primary                   = true
+      name      = "ipconfig1"
+      subnet_id = data.azurerm_subnet.main.id
+      primary   = true
     }
   }
 
