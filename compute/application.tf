@@ -98,3 +98,13 @@ resource "azurerm_linux_virtual_machine_scale_set" "epam_tf_lab" {
     Owner     = "Alexandra Ghitan"
   }
 }
+resource "azurerm_user_assigned_identity" "test_import" {
+  name                = "test-import"
+  resource_group_name = "alexlab-01"
+  location            = "eastus"
+
+  tags = {
+    Terraform = "true"
+    Project   = "epam-tf-lab"
+  }
+}
